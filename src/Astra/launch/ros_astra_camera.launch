@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf8"?>
+<launch>
+    <node name="astra_ros" pkg="astra_ros" type="astra_ros" output="screen">
+        <param name="streams" value="color" />
+        <param name="color/image" value="false" />
+        <param name="color/pointcloud" value="true" />
+    </node>
+</launch>
