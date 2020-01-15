@@ -50,7 +50,7 @@ class Publisher {
         this->globalConfiguration.fps = nh.param("fps", 30);
         this->globalConfiguration.enable_registration = nh.param("enable_registration", false);
 
-        std::stringstream ss(nh.param("streams", std::string("ir16,irrgb")));
+        std::stringstream ss(nh.param("streams", std::string("ir16,color")));
         std::string streamType;
         uint streamID = 0;
         while (std::getline(ss, streamType, ',') && streamID < Publisher::NUMBER_OF_STREAMS) {
