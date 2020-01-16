@@ -62,7 +62,7 @@ height = (frame).height(); \
 		}
 	}
 
-#define CONVERT_MM_TO_M(mm) ((mm) / 1000)
+#define CONVERT_MM_TO_M(mm) (((float)(mm)) / 1000.0)
 
 #define SET_LWH_RESIZE(frame, pcloud) \
 length = (frame).length(); \
@@ -79,7 +79,7 @@ if (depthData.size() > 1) { \
 } \
 else { \
 	point.x = CONVERT_MM_TO_M(w); \
-	point.y = CONVERT_MM_TO_M(h); \
+	point.y = -CONVERT_MM_TO_M(h); \
 	point.z = 0x0; \
 }
 

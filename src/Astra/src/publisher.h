@@ -137,17 +137,17 @@ stream.start();
         && currentPublisher < Publisher::NUMBER_OF_PUBLISHERS) {
             Publisher::StreamConfiguration* config = &(this->streamConfigurations[currentStreamConfiguration]);
             if (config->streamType) {
-                if (config->image) {
-                    std::string topic = "/astra_camera/" + config->streamTypeString + "/image";
-                    std::cout << "Creating Topic: " << topic << std::endl;
-                    this->publishers[currentPublisher++] 
-                        = this->nh.advertise<sensor_msgs::Image>(topic, 1000);
-                }
                 if (config->pointcloud) {
                     std::string topic = "/astra_camera/" + config->streamTypeString + "/pointcloud";
                     std::cout << "Creating Topic: " << topic << std::endl;
                     this->publishers[currentPublisher++] 
                         = this->nh.advertise<sensor_msgs::PointCloud2>(topic, 1000);
+                }
+                if (config->image) {
+                    std::string topic = "/astra_camera/" + config->streamTypeString + "/image";
+                    std::cout << "Creating Topic: " << topic << std::endl;
+                    this->publishers[currentPublisher++] 
+                        = this->nh.advertise<sensor_msgs::Image>(topic, 1000);
                 }
             }
             ++currentStreamConfiguration;
@@ -180,19 +180,29 @@ stream.start();
                         break;
                     }
                 }
-                if (config->image) {
-                    sensor_msgs::Image image;
-                    pcl::toROSMsg((*pcloud), image);
-                    image.header.stamp = listener->time;
-                    image.header.frame_id = "astra_camera";
-                    this->publishers[currentPublisher++].publish(image);
-                }
                 if (config->pointcloud) {
                     sensor_msgs::PointCloud2 pcloud2;
                     pcl::toROSMsg((*pcloud), pcloud2);
                     pcloud2.header.stamp = listener->time;
                     pcloud2.header.frame_id = "astra_camera";
                     this->publishers[currentPublisher++].publish(pcloud2);
+                }
+                if (config->image) {
+                    sensor_msgs::Image image;
+                    uint height = pcloud->height;
+                    uint width = pcloud->width;
+                    for (uint h = 0; h < height; ++h) {
+                        for (uint w = 0; w < width / 2; ++w) {
+                            uint32_t tempRgba;
+                            tempRgba = pcloud->operator[]((h*width)+w).rgba;
+                            pcloud->operator[]((h*width)+w).rgba = pcloud->operator[]((h*width)+(width-w)).rgba;
+                            pcloud->operator[]((h*width)+(width-w)).rgba = tempRgba;
+                        }
+                    }
+                    pcl::toROSMsg((*pcloud), image);
+                    image.header.stamp = listener->time;
+                    image.header.frame_id = "astra_camera";
+                    this->publishers[currentPublisher++].publish(image);
                 }
             }
             ++currentStreamConfiguration;
