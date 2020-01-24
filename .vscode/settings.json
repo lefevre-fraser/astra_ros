@@ -63,7 +63,8 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "csignal": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "core": "cpp"
     },
     "files.exclude": {
         "**/.git": true,
