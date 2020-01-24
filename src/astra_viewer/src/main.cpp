@@ -10,11 +10,6 @@
 #include "publisher.h"
 #include "key_handler.h"
 
-void callBack(const std_msgs::String::ConstPtr& msg)
-{
-	std::cout << msg->data.c_str() << std::endl;
-}
-
 int main(int argc, char** argv)
 {
 	try {
@@ -29,15 +24,13 @@ int main(int argc, char** argv)
 		std::cout << "Initializing Reader" << std::endl;
 		astra::StreamSet streamSet;
 		astra::StreamReader reader = streamSet.create_reader();
-		// reader.stream<astra::ColorStream>().start();
-		// reader.stream<astra::DepthStream>().start();
 
 		std::cout << "Creating Listener" << std::endl;
-		AstraListener::Shared_Ptr listener(new AstraListener());
+		astra_viewer::FrameListener::Shared_Ptr listener(new astra_viewer::FrameListener());
 		reader.add_listener(*listener);
 
 		std::cout << "Creating Publisher" << std::endl;
-		Publisher publisher(reader);
+		astra_viewer::Publisher publisher(reader);
 
 		std::cout << "Updating Astra Frame" << std::endl;
 		ros::Rate rate(500);

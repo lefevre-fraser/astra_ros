@@ -74,5 +74,6 @@
         "build": true,
         "devel": true,
         "astra.log": true
-    }
+    },
+    "ros.distro": "kinetic"
 }

@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/devel/lib/astra_ros/astra_ros",
+            "program": "${workspaceFolder}/devel/lib/astra_viewer/astra_viewer",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

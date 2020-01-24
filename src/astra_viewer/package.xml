@@ -1,8 +1,8 @@
 <package format="2">
-  <name>astra_ros</name>
+  <name>astra_viewer</name>
   <version>1.0.0</version>
   <description>
-    This packages provides integration with the Orbbec camera
+    This packages provides integration with the cameras supported by the Astra SDK
   </description>
   <maintainer email="fraser.lefevre@metamorphsoftware.com">Fraser LeFevre</maintainer>
   <license>BSD</license>
